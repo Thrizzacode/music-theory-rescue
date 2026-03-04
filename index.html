@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="搶救大作戰 — 音樂樂理練習平台，提供音感、和弦、音程、節奏的互動式樂譜練習">
+  <title>搶救大作戰 — 音樂樂理練習平台</title>
+  <!-- 防止初次載入閃爍 — 在 CSS 載入前套用已儲存的主題偏好 -->
+  <script>
+    (function () {
+      var theme = localStorage.getItem('theme-preference');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- 頁首區域 -->
+  <header id="app-header">
+    <div class="header-inner">
+      <h1 class="site-title">
+        <a href="#/" id="home-link">🎵 搶救大作戰</a>
+      </h1>
+      <p class="site-subtitle">音樂樂理練習平台</p>
+      <!-- 主題切換按鈕 -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="切換主題">🌙</button>
+    </div>
+  </header>
+
+  <!-- Breadcrumb 導航 -->
+  <nav id="breadcrumb" aria-label="導覽路徑">
+    <ol class="breadcrumb-list"></ol>
+  </nav>
+
+  <!-- 動態內容區域 -->
+  <main id="app-content">
+    <!-- 視圖由 JavaScript 動態渲染 -->
+    <div id="loading" class="loading-indicator" role="status" aria-live="polite">
+      <span class="loading-spinner"></span>
+      <span>載入中...</span>
+    </div>
+  </main>
+
+  <!-- 頁尾 -->
+  <footer id="app-footer">
+    <p>&copy; 搶救大作戰 — 譚琇文 音樂樂理練習平台</p>
+  </footer>
+
+  <!-- AlphaTab 透過 CDN 引入 -->
+  <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+---
+name: auto-commit
+description: 全自動化 Git 流程助手。依據 Angular 規範生成 Commit，自動處理 Push 與 PR 發送。
+version: 2.2.0
+---
+
+# Auto Commit Skill (Git Automator)
+
+## Trigger Keywords
+
+- `commit`
+- `幫我commit`
+
+## Context & Constraints
+
+- **核心目標**：將代碼從 Local 安全、規範地送往 Remote，並可一鍵發 PR。
+- **優先級**：優先分析暫存區 (Staging Area)，若為空則分析工作區 (Working Directory)。
+- **Token 優化**：避免一次性讀取過多 Diff 導致上下文溢出。
+- **安全性**：在執行 `git add -A` 前需確保使用者知情。
+
+## Instructions
+
+### Step 1: 環境掃描與狀態偵測
+
+1.  **獲取當前分支**：執行 `git rev-parse --abbrev-ref HEAD` 獲取當前分支名稱 (記為 `{{current_branch}}`)。
+2.  **變更量檢查**：
+    - 執行 `git diff --cached --stat`。若無輸出，則執行 `git diff --stat` (並標記需執行 `git add`)。
+    - **Guardrail**: 若變更檔案超過 **10 個** 或 `insertions/deletions` 超過 **500 行**，**不讀取完整 Diff**。僅列出變更檔案列表，並要求使用者提供本次變更的「一句話摘要」以輔助生成。
+3.  **精準讀取**：
+    - 若變更在安全範圍內，執行 `git diff --cached -U1` (若暫存區為空則去掉 `--cached`)。`-U1` 僅保留 1 行上下文以節省 Token。
+
+### Step 2: 生成 Commit Message (Angular Convention)
+
+基於 Diff 內容生成符合 Angular 規範的訊息：
+
+- **Header**: `<type>(<scope>): <summary>` (中文)
+  - `type`: feat, fix, docs, style, refactor, perf, test, chore, revert, build, ci.
+  - `scope`: 受影響的組件或檔案夾名稱 (可選)。
+- **Body**:
+  - 使用列點 `- ` 說明具體變更。
+  - 若有多個邏輯變更，請分段說明。
+
+### Step 3: 預覽與確認
+
+請輸出以下區塊供使用者確認：
+
+> **🚀 Auto Commit 準備就緒**
+> **當前分支**: `{{current_branch}}`
+> **建議 Commit**:
+>
+> **請選擇下一步：**
+>
+> - **[y]** 僅提交 (Commit)
+> - **[p]** 提交並推送 (Commit & Push)
+> - **[d]** 提交、推送並發 PR 到 main (Commit, Push & PR)
+> - **[n]** 取消
+
+### Step 4: 執行 Git 命令
+
+根據使用者選擇執行：
+
+- **Case [y]**:
+  1. `git add -A`
+  2. `git commit -m "<標題>" -m "<細節1>" -m "<細節2>"`
+- **Case [p]**:
+  1. 執行 [y] 的步驟。
+  2. `git push origin {{current_branch}}`
+- **Case [d]**:
+  1. 執行 [p] 的步驟。
+  2. 進入 **Step 5**。
+- **Case [n]**:
+  - 不做任何操作，結束流程。
+
+### Step 5: 自動發 PR 到 main
+
+**僅在選擇 [d] 時執行：**
+
+1.  使用 `mcp_github_create_pull_request` 工具建立 Pull Request：
+    - **owner / repo**：從 `git remote -v` 中解析。
+    - **head**: `{{current_branch}}`
+    - **base**: `main`
+    - **title**: 與 Commit Header 相同。
+    - **body**: 包含本次 Commit 的完整 Body 內容，格式化為 Markdown 列表。
+2.  輸出 PR 連結並提示：「✅ PR 已建立，請前往 GitHub 確認或合併。」

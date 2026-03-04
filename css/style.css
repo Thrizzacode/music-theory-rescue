@@ -1,0 +1,696 @@
+/* ============================================
+   搶救大作戰 — 音樂樂理練習平台
+   CSS Design System + 全站樣式
+   ============================================ */
+
+/* ---------- CSS Custom Properties ---------- */
+/* Light Mode（預設） */
+:root {
+  /* 色彩系統 — 薄荷綠主色 */
+  --color-primary: #52B788;
+  --color-primary-light: #95D5B2;
+  --color-primary-dark: #2D6A4F;
+  --color-secondary: #40916C;
+  --color-secondary-light: #74C69D;
+  --color-accent: #B7E4C7;
+  --color-accent-light: #D8F3DC;
+
+  /* 背景色 — 淺色 */
+  --bg-body: #F5F5FA;
+  --bg-surface: #FFFFFF;
+  --bg-surface-hover: #F0F0F8;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F0F0F8;
+  --bg-overlay: rgba(0, 0, 0, 0.3);
+
+  /* 文字色 — 深色 */
+  --text-primary: #2D2D3F;
+  --text-secondary: #6B6B8D;
+  --text-muted: #9595B0;
+  --text-on-primary: #FFFFFF;
+
+  /* 狀態色 */
+  --color-success: #00B894;
+  --color-warning: #FDCB6E;
+  --color-error: #E17055;
+  --color-info: #74B9FF;
+
+  /* 邊框與光暈 — 跟隨主題 */
+  --border-color: rgba(82, 183, 136, 0.15);
+  --border-color-hover: rgba(82, 183, 136, 0.4);
+  --glow-color: rgba(82, 183, 136, 0.2);
+  --header-glow: rgba(82, 183, 136, 0.6);
+
+  /* 間距系統 */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* 字型 */
+  --font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  --font-family-mono: "Fira Code", "Consolas", monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+
+  /* 圓角 */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* 陰影 */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 20px var(--glow-color);
+
+  /* 滑桿軌道色 */
+  --slider-track: #D0D0E0;
+
+  /* 樂譜區域背景 */
+  --score-bg: #FFFFFF;
+
+  /* 動畫 */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* 佈局 */
+  --container-max-width: 1200px;
+  --header-height: 4rem;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+  /* 背景色 — 深色 */
+  --bg-body: #0F0F1A;
+  --bg-surface: #1A1A2E;
+  --bg-surface-hover: #222240;
+  --bg-card: #16213E;
+  --bg-card-hover: #1D2B50;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  /* 文字色 — 淺色 */
+  --text-primary: #EAEAEA;
+  --text-secondary: #A0A0C0;
+  --text-muted: #6C6C8A;
+
+  /* 邊框與光暈 */
+  --border-color: rgba(82, 183, 136, 0.15);
+  --border-color-hover: rgba(82, 183, 136, 0.4);
+  --glow-color: rgba(82, 183, 136, 0.3);
+  --header-glow: rgba(82, 183, 136, 0.6);
+
+  /* 陰影 — 深色環境加重 */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  /* 滑桿軌道色 */
+  --slider-track: #2A2A44;
+
+  /* 樂譜區域背景 — dark mode 維持白底以確保可讀性 */
+  --score-bg: #FFFFFF;
+}
+
+/* 主題切換平滑過渡 */
+body,
+body *,
+body *::before,
+body *::after {
+  transition: background-color var(--transition-normal),
+              color var(--transition-normal),
+              border-color var(--transition-normal),
+              box-shadow var(--transition-normal);
+}
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  background-color: var(--bg-body);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+/* ---------- Header ---------- */
+#app-header {
+  background: linear-gradient(
+    135deg,
+    var(--bg-surface) 0%,
+    var(--color-primary-dark) 100%
+  );
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--space-md) var(--space-lg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.header-inner {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-md);
+}
+
+.site-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.site-title a {
+  color: var(--text-on-primary);
+  text-decoration: none;
+  transition: text-shadow var(--transition-normal);
+}
+
+.site-title a:hover {
+  text-shadow: 0 0 12px var(--header-glow);
+  color: var(--text-on-primary);
+}
+
+.site-subtitle {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 主題切換按鈕 */
+.theme-toggle {
+  margin-left: auto;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-on-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition-fast);
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+/* ---------- Breadcrumb ---------- */
+#breadcrumb {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--space-sm) var(--space-lg);
+  display: none;
+}
+
+#breadcrumb.visible {
+  display: block;
+}
+
+.breadcrumb-list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  list-style: none;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.breadcrumb-list li::after {
+  content: "›";
+  margin-left: var(--space-xs);
+  color: var(--text-muted);
+}
+
+.breadcrumb-list li:last-child::after {
+  display: none;
+}
+
+.breadcrumb-list li a {
+  color: var(--color-primary);
+}
+
+.breadcrumb-list li:last-child {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ---------- Main Content ---------- */
+#app-content {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+  flex: 1;
+  width: 100%;
+}
+
+/* ---------- Loading ---------- */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-3xl);
+  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
+}
+
+.loading-indicator.hidden {
+  display: none;
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--bg-surface-hover);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- 卡片網格 ---------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-color-hover);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.card-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.card-icon {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-md);
+}
+
+/* ---------- 列表項目 ---------- */
+.list-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+}
+
+.list-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.list-item:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-color-hover);
+  transform: translateX(4px);
+}
+
+.list-item-number {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  font-weight: 600;
+  min-width: 2rem;
+}
+
+.list-item-title {
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ---------- 播放器 ---------- */
+.player-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* 音色切換 Tab */
+.tone-tabs {
+  display: flex;
+  gap: var(--space-xs);
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xs);
+  border: 1px solid var(--border-color);
+}
+
+.tone-tab {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.tone-tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface-hover);
+}
+
+.tone-tab.active {
+  background: var(--color-primary);
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 樂譜顯示區 */
+.score-display {
+  background: var(--score-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  min-height: 300px;
+  overflow-x: auto;
+}
+
+/* 播放控制列 */
+.player-controls {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.control-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-lg);
+  transition: all var(--transition-fast);
+  border: 1px solid var(--border-color);
+}
+
+.control-btn:hover {
+  background: var(--color-primary);
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.control-btn.active {
+  background: var(--color-primary);
+  color: var(--text-on-primary);
+}
+
+.control-btn.play-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: var(--text-on-primary);
+  font-size: var(--font-size-xl);
+  border: none;
+}
+
+.control-btn.play-btn:hover {
+  background: var(--color-primary-dark);
+  box-shadow: var(--shadow-glow);
+}
+
+/* 控制滑桿 */
+.control-slider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex: 1;
+  min-width: 0;
+}
+
+.control-slider label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  min-width: 3rem;
+}
+
+.control-slider input[type="range"] {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--slider-track);
+  border-radius: var(--radius-full);
+  outline: none;
+}
+
+.control-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: box-shadow var(--transition-fast);
+}
+
+.control-slider input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 8px var(--glow-color);
+}
+
+.control-slider .slider-value {
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  font-weight: 600;
+  min-width: 3rem;
+  text-align: right;
+}
+
+/* ---------- 錯誤訊息 ---------- */
+.error-message {
+  background: rgba(225, 112, 85, 0.1);
+  border: 1px solid rgba(225, 112, 85, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  color: var(--color-error);
+  text-align: center;
+  font-size: var(--font-size-base);
+}
+
+/* ---------- 空狀態 ---------- */
+.empty-state {
+  text-align: center;
+  padding: var(--space-3xl);
+  color: var(--text-muted);
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
+}
+
+/* ---------- Footer ---------- */
+#app-footer {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  padding: var(--space-md) var(--space-lg);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* ---------- 進度條（SoundFont 載入）---------- */
+.progress-bar-container {
+  background: var(--bg-card);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  height: 6px;
+  width: 100%;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
+  width: 0%;
+}
+
+.progress-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: var(--space-xs);
+}
+
+/* ---------- 視圖標題 ---------- */
+.view-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+/* ============================================
+   RWD 響應式設計
+   ============================================ */
+
+/* 手機版（預設 Mobile-first）：已定義在上方 */
+
+/* 平板版：≥ 768px */
+@media (min-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .header-inner {
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  .player-controls .controls-row {
+    gap: var(--space-md);
+  }
+
+  .control-slider {
+    min-width: 200px;
+  }
+}
+
+/* 桌機版：≥ 1024px */
+@media (min-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .player-controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .controls-row {
+    flex-wrap: nowrap;
+  }
+}

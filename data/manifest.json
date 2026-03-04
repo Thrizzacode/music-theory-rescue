@@ -1,0 +1,162 @@
+{
+  "books": [
+    {
+      "id": "ear-training",
+      "name": "音感(音準)練習篇",
+      "icon": "🎧",
+      "chapters": [
+        {
+          "id": "p1",
+          "name": "P.1 單音無升降練習",
+          "songs": [
+            {
+              "id": "no1",
+              "title": "No.1",
+              "tones": {
+                "piano": "scores/ear-training/p1/no1-piano.musicxml",
+                "flute": "scores/ear-training/p1/no1-flute.musicxml",
+                "strings": "scores/ear-training/p1/no1-strings.musicxml"
+              }
+            },
+            {
+              "id": "no2",
+              "title": "No.2",
+              "tones": {
+                "piano": "scores/ear-training/p1/no2-piano.musicxml",
+                "flute": "scores/ear-training/p1/no2-flute.musicxml",
+                "strings": "scores/ear-training/p1/no2-strings.musicxml"
+              }
+            },
+            {
+              "id": "no3",
+              "title": "No.3",
+              "tones": {
+                "piano": "scores/ear-training/p1/no3-piano.musicxml",
+                "flute": "scores/ear-training/p1/no3-flute.musicxml",
+                "strings": "scores/ear-training/p1/no3-strings.musicxml"
+              }
+            }
+          ]
+        },
+        {
+          "id": "p2",
+          "name": "P.2 單音無升降練習",
+          "songs": [
+            {
+              "id": "no1",
+              "title": "No.1",
+              "tones": {
+                "piano": "scores/ear-training/p2/no1-piano.musicxml",
+                "flute": "scores/ear-training/p2/no1-flute.musicxml",
+                "strings": "scores/ear-training/p2/no1-strings.musicxml"
+              }
+            }
+          ]
+        },
+        {
+          "id": "p3",
+          "name": "P.3 單音有升降練習",
+          "songs": [
+            {
+              "id": "no1",
+              "title": "No.1",
+              "tones": {
+                "piano": "scores/ear-training/p3/no1-piano.musicxml",
+                "flute": "scores/ear-training/p3/no1-flute.musicxml",
+                "strings": "scores/ear-training/p3/no1-strings.musicxml"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chord",
+      "name": "和弦練習篇",
+      "icon": "🎹",
+      "chapters": [
+        {
+          "id": "p1",
+          "name": "P.1 三和弦練習",
+          "songs": [
+            {
+              "id": "no1",
+              "title": "No.1",
+              "tones": {
+                "piano": "scores/chord/p1/no1-piano.musicxml",
+                "flute": "scores/chord/p1/no1-flute.musicxml",
+                "strings": "scores/chord/p1/no1-strings.musicxml"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "interval",
+      "name": "音程練習篇",
+      "icon": "🎼",
+      "chapters": [
+        {
+          "id": "p1",
+          "name": "P.1 基礎音程練習",
+          "songs": [
+            {
+              "id": "no1",
+              "title": "No.1",
+              "tones": {
+                "piano": "scores/interval/p1/no1-piano.musicxml",
+                "flute": "scores/interval/p1/no1-flute.musicxml",
+                "strings": "scores/interval/p1/no1-strings.musicxml"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rhythm-1",
+      "name": "節奏練習篇.壹",
+      "icon": "🥁",
+      "chapters": [
+        {
+          "id": "p1",
+          "name": "P.1 基本節奏練習",
+          "songs": [
+            {
+              "id": "no1",
+              "title": "No.1",
+              "tones": {
+                "piano": "scores/rhythm-1/p1/no1-piano.musicxml",
+                "flute": "scores/rhythm-1/p1/no1-flute.musicxml",
+                "strings": "scores/rhythm-1/p1/no1-strings.musicxml"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rhythm-2",
+      "name": "節奏練習篇.貳",
+      "icon": "🎶",
+      "chapters": [
+        {
+          "id": "p1",
+          "name": "P.1 進階節奏練習",
+          "songs": [
+            {
+              "id": "no1",
+              "title": "No.1",
+              "tones": {
+                "piano": "scores/rhythm-2/p1/no1-piano.musicxml",
+                "flute": "scores/rhythm-2/p1/no1-flute.musicxml",
+                "strings": "scores/rhythm-2/p1/no1-strings.musicxml"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
