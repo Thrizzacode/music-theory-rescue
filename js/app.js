@@ -8,12 +8,21 @@ import {
   renderBookList,
   renderChapterList,
   renderSongList,
+  renderSidebar,
+  clearSidebar,
 } from "./navigation.js";
 import { renderPlayer, destroyPlayer } from "./player.js";
 import { initTheme } from "./theme.js";
 
 /** @type {HTMLElement} 內容容器 */
 const contentEl = document.getElementById("app-content");
+
+const sidebarContainer = document.querySelector(
+  "#app-sidebar .sidebar-content",
+);
+
+/** @type {HTMLElement} Sidebar 根元素 */
+const sidebarEl = document.getElementById("app-sidebar");
 
 /** @type {HTMLElement} Breadcrumb 導航 */
 const breadcrumbEl = document.getElementById("breadcrumb");
@@ -33,6 +42,7 @@ const routes = [
     pattern: /^#?\/?$/,
     handler: () => {
       updateBreadcrumb([]);
+      updateSidebar(null);
       renderBookList(contentEl);
     },
   },
@@ -46,6 +56,7 @@ const routes = [
         { label: "首頁", hash: "#/" },
         { label: book?.name || bookId },
       ]);
+      updateSidebar(bookId);
       renderChapterList(contentEl, bookId);
     },
   },
@@ -61,6 +72,7 @@ const routes = [
         { label: book?.name || bookId, hash: `#/book/${bookId}` },
         { label: chapter?.name || chapterId },
       ]);
+      updateSidebar(bookId, { chapterId });
       renderSongList(contentEl, bookId, chapterId);
     },
   },
@@ -80,10 +92,26 @@ const routes = [
         },
         { label: `${songId}` },
       ]);
+      updateSidebar(bookId, { chapterId, songId });
       renderPlayer(contentEl, bookId, chapterId, songId);
     },
   },
 ];
+
+/**
+ * 更新側邊欄內容
+ * @param {string|null} bookId
+ * @param {Object} activeParams
+ */
+function updateSidebar(bookId, activeParams = {}) {
+  if (!bookId) {
+    sidebarEl?.classList.remove("visible");
+    clearSidebar(sidebarContainer);
+    return;
+  }
+  sidebarEl?.classList.add("visible");
+  renderSidebar(sidebarContainer, bookId, activeParams);
+}
 
 /**
  * 路由處理 — 解析目前 hash 並渲染對應視圖
@@ -101,6 +129,7 @@ function handleRoute() {
     const matches = hash.match(route.pattern);
     if (matches) {
       hideLoading();
+      window.scrollTo(0, 0); // 切換路由時回到最上方
       route.handler(matches);
       return;
     }

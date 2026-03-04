@@ -27,6 +27,26 @@ const TONES = [
   { id: "strings", name: "🎻 弦樂", label: "Strings" },
 ];
 
+/** 音程定義（移調下拉選單選項） */
+const INTERVALS = [
+  { name: "原調", semitones: 0 },
+  { name: "小二度 (1個半音)", semitones: 1 },
+  { name: "大二度 (2個半音)", semitones: 2 },
+  { name: "小三度 (3個半音)", semitones: 3 },
+  { name: "大三度 (4個半音)", semitones: 4 },
+  { name: "完全四度 (5個半音)", semitones: 5 },
+  { name: "增四度 (6個半音)", semitones: 6 },
+  { name: "減五度 (6個半音)", semitones: 6 },
+  { name: "完全五度 (7個半音)", semitones: 7 },
+  { name: "增五度 (8個半音)", semitones: 8 },
+  { name: "小六度 (8個半音)", semitones: 8 },
+  { name: "大六度 (9個半音)", semitones: 9 },
+  { name: "增六度 (10個半音)", semitones: 10 },
+  { name: "小七度 (10個半音)", semitones: 10 },
+  { name: "大七度 (11個半音)", semitones: 11 },
+  { name: "完全八度 (12個半音)", semitones: 12 },
+];
+
 /**
  * 渲染播放器視圖
  * @param {HTMLElement} container
@@ -107,10 +127,21 @@ export function renderPlayer(container, bookId, chapterId, songId) {
 
         <!-- 移調控制 -->
         <div class="controls-row">
-          <div class="control-slider">
-            <label for="transpose-slider">移調</label>
-            <input type="range" id="transpose-slider" min="-15" max="15" value="0" step="1">
-            <span class="slider-value" id="transpose-value">0</span>
+          <div class="transpose-control">
+            <label>移調</label>
+            <div class="transpose-direction" role="radiogroup" aria-label="移調方向">
+              <label class="radio-label">
+                <input type="radio" name="transpose-dir" value="up" checked> 升
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="transpose-dir" value="down"> 降
+              </label>
+            </div>
+            <select id="transpose-select" aria-label="移調音程">
+              ${INTERVALS.map(
+                (iv, i) => `<option value="${i}">${iv.name}</option>`,
+              ).join("")}
+            </select>
           </div>
         </div>
       </div>
@@ -255,16 +286,25 @@ function bindPlayerEvents(container) {
     }
   });
 
-  // 移調控制
-  const transposeSlider = container.querySelector("#transpose-slider");
-  const transposeValue = container.querySelector("#transpose-value");
-  transposeSlider?.addEventListener("input", () => {
-    const semitones = parseInt(transposeSlider.value);
-    if (transposeValue)
-      transposeValue.textContent =
-        semitones > 0 ? `+${semitones}` : `${semitones}`;
+  // 移調控制 — 下拉選單 + 升降方向
+  const transposeSelect = container.querySelector("#transpose-select");
+  const dirRadios = container.querySelectorAll('input[name="transpose-dir"]');
+
+  /** 計算並套用移調 */
+  function applyTranspose() {
+    if (!transposeSelect) return;
+    const idx = parseInt(transposeSelect.value);
+    const interval = INTERVALS[idx];
+    if (!interval) return;
+
+    // 判斷方向
+    const dirRadio = container.querySelector(
+      'input[name="transpose-dir"]:checked',
+    );
+    const direction = dirRadio?.value === "down" ? -1 : 1;
+    const semitones = interval.semitones * direction;
+
     if (alphaTabApi) {
-      // AlphaTab 的 transpose API
       const tracks = alphaTabApi.tracks;
       if (tracks && tracks.length > 0) {
         for (const track of tracks) {
@@ -275,6 +315,11 @@ function bindPlayerEvents(container) {
         alphaTabApi.render();
       }
     }
+  }
+
+  transposeSelect?.addEventListener("change", applyTranspose);
+  dirRadios.forEach((radio) => {
+    radio.addEventListener("change", applyTranspose);
   });
 
   // 音色切換 Tab
