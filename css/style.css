@@ -7,33 +7,33 @@
 /* Light Mode（預設） */
 :root {
   /* 色彩系統 — 薄荷綠主色 */
-  --color-primary: #52B788;
-  --color-primary-light: #95D5B2;
-  --color-primary-dark: #2D6A4F;
-  --color-secondary: #40916C;
-  --color-secondary-light: #74C69D;
-  --color-accent: #B7E4C7;
-  --color-accent-light: #D8F3DC;
+  --color-primary: #52b788;
+  --color-primary-light: #95d5b2;
+  --color-primary-dark: #2d6a4f;
+  --color-secondary: #40916c;
+  --color-secondary-light: #74c69d;
+  --color-accent: #b7e4c7;
+  --color-accent-light: #d8f3dc;
 
   /* 背景色 — 淺色 */
-  --bg-body: #F5F5FA;
-  --bg-surface: #FFFFFF;
-  --bg-surface-hover: #F0F0F8;
-  --bg-card: #FFFFFF;
-  --bg-card-hover: #F0F0F8;
+  --bg-body: #f5f5fa;
+  --bg-surface: #ffffff;
+  --bg-surface-hover: #f0f0f8;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f0f8;
   --bg-overlay: rgba(0, 0, 0, 0.3);
 
   /* 文字色 — 深色 */
-  --text-primary: #2D2D3F;
-  --text-secondary: #6B6B8D;
-  --text-muted: #9595B0;
-  --text-on-primary: #FFFFFF;
+  --text-primary: #2d2d3f;
+  --text-secondary: #6b6b8d;
+  --text-muted: #9595b0;
+  --text-on-primary: #ffffff;
 
   /* 狀態色 */
-  --color-success: #00B894;
-  --color-warning: #FDCB6E;
-  --color-error: #E17055;
-  --color-info: #74B9FF;
+  --color-success: #00b894;
+  --color-warning: #fdcb6e;
+  --color-error: #e17055;
+  --color-info: #74b9ff;
 
   /* 邊框與光暈 — 跟隨主題 */
   --border-color: rgba(82, 183, 136, 0.15);
@@ -75,10 +75,10 @@
   --shadow-glow: 0 0 20px var(--glow-color);
 
   /* 滑桿軌道色 */
-  --slider-track: #D0D0E0;
+  --slider-track: #d0d0e0;
 
   /* 樂譜區域背景 */
-  --score-bg: #FFFFFF;
+  --score-bg: #ffffff;
 
   /* 動畫 */
   --transition-fast: 150ms ease;
@@ -93,17 +93,17 @@
 /* Dark Mode */
 [data-theme="dark"] {
   /* 背景色 — 深色 */
-  --bg-body: #0F0F1A;
-  --bg-surface: #1A1A2E;
+  --bg-body: #0f0f1a;
+  --bg-surface: #1a1a2e;
   --bg-surface-hover: #222240;
-  --bg-card: #16213E;
-  --bg-card-hover: #1D2B50;
+  --bg-card: #16213e;
+  --bg-card-hover: #1d2b50;
   --bg-overlay: rgba(0, 0, 0, 0.5);
 
   /* 文字色 — 淺色 */
-  --text-primary: #EAEAEA;
-  --text-secondary: #A0A0C0;
-  --text-muted: #6C6C8A;
+  --text-primary: #eaeaea;
+  --text-secondary: #a0a0c0;
+  --text-muted: #6c6c8a;
 
   /* 邊框與光暈 */
   --border-color: rgba(82, 183, 136, 0.15);
@@ -116,11 +116,15 @@
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
 
+  /* 色彩系統 — 深色主題下的薄荷綠 */
+  --color-accent: #2d6a4f;
+  --color-accent-light: rgba(82, 183, 136, 0.15);
+
   /* 滑桿軌道色 */
-  --slider-track: #2A2A44;
+  --slider-track: #2a2a44;
 
   /* 樂譜區域背景 — dark mode 維持白底以確保可讀性 */
-  --score-bg: #FFFFFF;
+  --score-bg: #ffffff;
 }
 
 /* 主題切換平滑過渡 */
@@ -128,10 +132,11 @@ body,
 body *,
 body *::before,
 body *::after {
-  transition: background-color var(--transition-normal),
-              color var(--transition-normal),
-              border-color var(--transition-normal),
-              box-shadow var(--transition-normal);
+  transition:
+    background-color var(--transition-normal),
+    color var(--transition-normal),
+    border-color var(--transition-normal),
+    box-shadow var(--transition-normal);
 }
 
 /* ---------- Reset & Base ---------- */
@@ -298,7 +303,11 @@ button {
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-secondary) 100%
+  );
   color: var(--text-on-primary);
   padding: var(--space-md) var(--space-xl);
   border-radius: var(--radius-full);
