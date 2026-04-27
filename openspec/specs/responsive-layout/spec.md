@@ -68,3 +68,46 @@ CSS Custom Properties 的主色須從紫色（`#6C5CE7`）更換為薄荷綠（`
 - **WHEN** 頁面被渲染
 - **THEN** 頁面結構使用適當的語義化 HTML5 元素
 - **THEN** 互動元素支援鍵盤操作
+
+---
+### Requirement: pc-sidebar-layout
+
+當使用者在 PC 端（螢幕寬度 >= 1024px）查看書籍練習視圖時，應用程式應採用基於側邊欄 (Sidebar) 的佈局。
+
+#### Scenario: desktop-layout-activation
+
+- **WHEN** 使用者在螢幕寬度 >= 1024px 的裝置上導航至書籍練習視圖（例如 `#/play/` 或 `#/book/`）時
+- **THEN** 在主內容區域的左側應顯示導航側邊欄
+
+
+<!-- @trace
+source: add-pc-sidebar-navigation
+updated: 2026-03-04
+code:
+  - js/player.js
+  - css/style.css
+  - js/app.js
+  - js/navigation.js
+  - index.html
+-->
+
+---
+### Requirement: sidebar-tree-structure
+
+側邊欄應顯示一個樹狀結構，代表當前所選書籍的層級（章節 > 曲目）。
+
+#### Scenario: treeitem-selection
+
+- **WHEN** 使用者點擊側邊欄中的曲目項目時
+- **THEN** 主內容區域應更新以顯示該特定曲目的樂譜與播放器
+
+<!-- @trace
+source: add-pc-sidebar-navigation
+updated: 2026-03-04
+code:
+  - js/player.js
+  - css/style.css
+  - js/app.js
+  - js/navigation.js
+  - index.html
+-->

@@ -1,0 +1,38 @@
+{
+  "name": "theory-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thrizzacode/music-theory-rescue.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Thrizzacode/music-theory-rescue/issues"
+  },
+  "homepage": "https://github.com/Thrizzacode/music-theory-rescue#readme",
+  "dependencies": {
+    "@coderline/alphatab": "^1.8.2",
+    "@coderline/alphatab-vite": "^1.8.2",
+    "vue": "^3.5.32",
+    "vue-router": "^5.0.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.6",
+    "javascript-obfuscator": "^5.4.1",
+    "terser": "^5.46.1",
+    "vite": "^8.0.9"
+  }
+}
